@@ -17,10 +17,15 @@ app = http.createServer(app_handler)
 io = require('socket.io').listen(app)
 
 io.sockets.on 'connection', (sock) ->
+  sock.join 'chatroom1'
   sock.emit 'chat', {msg: 'hello new client!'}
-  sock.on 'chat', (data)->
-    console.log data.msg
-    io.sockets.emit 'chat', data # echo
+
+  sock.once 'join_to_room', (room) ->
+    console.log "<#{sock.id}> join_room to #{room}"
+    sock.join room
+    sock.on 'chat', (data) ->
+      console.log data.msg
+      io.sockets.to(room).emit 'chat', data # echo ro room
 
 port = process.argv[2]-0 || 3000
 app.listen port
