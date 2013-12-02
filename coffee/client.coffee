@@ -15,9 +15,14 @@ socket.on 'connect', ->
 socket.on 'chat', (data) ->
   print data.msg
 
-$('#btn_send').click ->
+send_msg = ->
   msg = $('#msg_body').val()
   socket.emit 'chat', {msg: msg}
+  $('#msg_body').val('')
+
+$('#btn_send').click send_msg
+$('#msg_body').on 'keydown', (e) ->
+  send_msg() if e.keyCode == 13
 
 socket.on 'rooms', (rooms) ->
   dom = $('#rooms').html('')
