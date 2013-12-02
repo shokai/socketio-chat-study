@@ -1,6 +1,8 @@
 Socket.IO chat study
 ====================
 
+- https://github.com/shokai/socketio-chat-study
+
 ## Install Dependencies
 
     % npm install
