@@ -9,7 +9,7 @@ socket = io.connect('http://localhost');
 
 socket.on('connect', function() {
   var room, shebang;
-  room = (shebang = location.href.match(/#([^#]+)$/)) ? shebang[1] : 'default';
+  room = (shebang = location.href.match(/#([^#]+)$/)) ? shebang[1] : 'room1';
   socket.emit('join_to_room', room);
   return print("connect!!! (room:" + room + ")");
 });
@@ -24,4 +24,16 @@ $('#btn_send').click(function() {
   return socket.emit('chat', {
     msg: msg
   });
+});
+
+socket.on('rooms', function(rooms) {
+  var dom, name, num, _results;
+  dom = $('#rooms').html('');
+  _results = [];
+  for (name in rooms) {
+    num = rooms[name];
+    dom.append($('<a>').attr('href', location.origin + '#' + name).attr('target', '_blank').text("#" + name + "(" + num + ")"));
+    _results.push(dom.append(' '));
+  }
+  return _results;
 });
