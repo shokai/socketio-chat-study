@@ -16,11 +16,11 @@ app_handler = (req, res) ->
 app = http.createServer(app_handler)
 io = require('socket.io').listen(app)
 
-io.sockets.on 'connection', (socket) ->
-  sock.emit 'news', {hello: 'world'}
-  sock.on 'hello', (data)->
-    console.log 'receive hello'
-    console.log data
+io.sockets.on 'connection', (sock) ->
+  sock.emit 'chat', {msg: 'hello new client!'}
+  sock.on 'chat', (data)->
+    console.log data.msg
+    io.sockets.emit 'chat', data # echo
 
 port = process.argv[2]-0 || 3000
 app.listen port
