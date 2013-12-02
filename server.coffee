@@ -16,20 +16,20 @@ app_handler = (req, res) ->
 app = http.createServer(app_handler)
 io = require('socket.io').listen(app)
 
-io.sockets.on 'connection', (sock) ->
-  sock.emit 'chat', {msg: 'hello new client!'}
+io.sockets.on 'connection', (socket) ->
+  socket.emit 'chat', {msg: 'hello new client!'}
 
-  sock.once 'join_to_room', (room) ->
-    console.log "<#{sock.id}> join_room to \"#{room}\""
-    sock.join room
+  socket.once 'join_to_room', (room) ->
+    console.log "<#{socket.id}> join_room to \"#{room}\""
+    socket.join room
 
     ## echo to room
-    sock.on 'chat', (data) ->
+    socket.on 'chat', (data) ->
       console.log data.msg
       io.sockets.to(room).emit 'chat', data
 
-    sock.once 'disconnect', ->
-      sock.leave room
+    socket.once 'disconnect', ->
+      socket.leave room
       notify_rooms()
 
     notify_rooms()
