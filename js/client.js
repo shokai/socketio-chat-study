@@ -5,7 +5,7 @@ print = function(msg) {
   return $('#log').append($('<p>').text(msg));
 };
 
-socket = io.connect('http://localhost');
+socket = io.connect("" + location.protocol + "//" + location.hostname);
 
 socket.on('connect', function() {
   var room, shebang;
