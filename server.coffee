@@ -25,7 +25,7 @@ io.sockets.on 'connection', (socket) ->
 
     ## echo to room
     socket.on 'chat', (data) ->
-      console.log data.msg
+      console.log "<#{socket.id}> #{data.msg}"
       io.sockets.to(room).emit 'chat', data
 
     socket.once 'disconnect', ->
@@ -41,7 +41,6 @@ notify_rooms = ->
     if name.match /^\/.+$/
       name = name.replace /^\//, ''
       rooms[name] = ids.length
-  console.log rooms
   io.sockets.emit 'rooms', rooms
 
 port = process.argv[2]-0 || 3000
