@@ -2,7 +2,7 @@
 var print, send_msg, socket;
 
 print = function(msg) {
-  return $('#log').append($('<p>').text(msg));
+  return $('#log').prepend($('<p>').text(msg));
 };
 
 socket = io.connect("" + location.protocol + "//" + location.hostname);

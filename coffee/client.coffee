@@ -1,5 +1,5 @@
 print = (msg) ->
-  $('#log').append $('<p>').text(msg)
+  $('#log').prepend $('<p>').text(msg)
 
 socket = io.connect "#{location.protocol}//#{location.hostname}"
 
